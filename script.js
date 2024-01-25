@@ -14,8 +14,7 @@ const smallNewsContainer = document.querySelector('.articles__small-column');
 
 mainNews.forEach(item => {
   const element = mainNewsTemplate.content.cloneNode(true);
-
-  element.querySelector('.main-article__image').src = item.image;
+  element.querySelector('.main-article__image').src = item.image === "" ? 'https://placehold.co/600x400?text=Not\\nFound' : item.image;
   element.querySelector('.article-category').textContent = categories.get(item.category_id);
   element.querySelector('.main-article__title').textContent = item.title;
   element.querySelector('.main-article__text').textContent = item.description;
