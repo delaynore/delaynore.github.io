@@ -6,28 +6,81 @@ const sources = new Map(data.sources.map(item => [item.id, item.name]));
 const mainNews = data.items.slice(0, 3);
 const smallNews = data.items.slice(3, 12);
 
-const mainNewsTemplate = document.getElementById('main-news-item');
-const smallNewsTemplate = document.getElementById('small-article-item');
 const mainNewsContainer = document.querySelector('.articles__big-column');
 const smallNewsContainer = document.querySelector('.articles__small-column');
 
+const createMainNewsItem = (item) => {
+  const article = document.createElement('article');
+  article.classList.add('main-article');
+
+  const divImage = document.createElement('div');
+  divImage.classList.add('main-article__image-container');
+  article.appendChild(divImage);
+
+  const image = document.createElement('img');
+  image.src = item.image === "" ? 'https://placehold.co/600x400?text=Not\\nFound' : item.image;
+  image.classList.add('main-article__image');
+  image.alt = 'image';
+
+  divImage.appendChild(image);
+
+  const divContent = document.createElement('div');
+  divContent.classList.add('main-article__content');
+  article.appendChild(divContent);
+  
+  const spanCategory = document.createElement('span');
+  spanCategory.classList.add('article-category', 'main-article__category');
+  spanCategory.textContent = categories.get(item.category_id);
+  divContent.appendChild(spanCategory);
+
+  const h2Title = document.createElement('h2');
+  h2Title.classList.add('main-article__title');
+  h2Title.textContent = item.title;
+  divContent.appendChild(h2Title);
+
+  const text = document.createElement('p');
+  text.classList.add('main-article__text');
+  text.textContent = item.description;
+  divContent.appendChild(text);
+
+  const spanSource = document.createElement('span');
+  spanSource.classList.add('article-source', 'main-article__source');
+  spanSource.textContent = sources.get(item.source_id);
+  divContent.appendChild(spanSource);
+  
+  return article;
+};
+
+const createSmallNewsItem = (item) => {
+  const article = document.createElement('article');
+  article.classList.add('small-article');
+
+  const h2Title = document.createElement('h2');
+  h2Title.classList.add('small-article__title');
+  h2Title.textContent = item.title;
+  article.appendChild(h2Title);
+
+  const caption = document.createElement('p');
+  caption.classList.add('small-article__caption');
+  article.appendChild(caption);
+
+  const spanDate = document.createElement('span');
+  spanDate.classList.add('article-date', 'small-article__date');
+  spanDate.textContent = new Date(item.date).toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' });
+  caption.appendChild(spanDate);
+
+  const spanSource = document.createElement('span');
+  spanSource.classList.add('article-source', 'small-article__source');
+  spanSource.textContent = sources.get(item.source_id);
+  caption.appendChild(spanSource);
+
+  return article;
+}
 
 mainNews.forEach(item => {
-  const element = mainNewsTemplate.content.cloneNode(true);
-  element.querySelector('.main-article__image').src = item.image === "" ? 'https://placehold.co/600x400?text=Not\\nFound' : item.image;
-  element.querySelector('.article-category').textContent = categories.get(item.category_id);
-  element.querySelector('.main-article__title').textContent = item.title;
-  element.querySelector('.main-article__text').textContent = item.description;
-  element.querySelector('.main-article__source').textContent = sources.get(item.source_id);
-  mainNewsContainer.appendChild(element);
+  mainNewsContainer.appendChild(createMainNewsItem(item));
 });
 
 smallNews.forEach(item => {
-  const element = smallNewsTemplate.content.cloneNode(true);
-
-  element.querySelector('.small-article__title').textContent = item.title;
-  element.querySelector('.small-article__source').textContent = sources.get(item.source_id);
-  element.querySelector('.small-article__date').textContent = new Date(item.date).toLocaleDateString('ru-RU', { month: 'long', day: 'numeric' });
-
-  smallNewsContainer.appendChild(element);
+  smallNewsContainer.appendChild(createSmallNewsItem(item));
 });
