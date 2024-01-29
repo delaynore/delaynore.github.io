@@ -1,0 +1,23 @@
+.small-article {
+    border-left: 9px solid var(--color-primary);
+    padding-left: 11px;
+    margin-bottom: 35px;
+}
+.small-article:last-child {
+    margin-bottom: 0;
+}
+
+.small-article__title {
+    color: var(--color-primary);
+    font-size: 20px;
+    font-weight: 700;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-date + .article-source::before {
+    content: ' · ';
+}
