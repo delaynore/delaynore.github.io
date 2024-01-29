@@ -1,3 +1,6 @@
+import React from 'react';
+import './MainArticle.css';
+
 export const MainArticle = ({ title, description, image, source, category }) => {
     return (
         <article className="main-article">

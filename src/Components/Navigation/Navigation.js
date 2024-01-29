@@ -1,10 +1,13 @@
-import { categoryNames } from "./utils.js"
+import React from 'react';
+import { categoryNames } from "../../utils.js"
+import './Navigation.css';
+import logo from '../../images/logo.svg';
 
 export const Navigation = ({ onNavClick, currentCategory, className = '', placement = 'header' }) => {
     return (
         <nav className={`navigation grid navigation--${placement} ${className}`}>
             <a data-href='index' href='#' className='navigation__logo'>
-                <img className='navigation__image' src='/images/logo.svg' alt='logo' />
+                <img className='navigation__image' src={logo} alt='logo' />
             </a>
             <ul className='navigation__list'>
                 {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
