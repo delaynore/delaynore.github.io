@@ -15,6 +15,59 @@ const category_names = {
     karpov: 'Karpov'
 }
 
+const MainArticle = ({ title, description, image, source, category }) => {
+    return (
+        <article className="main-article">
+            <div className="main-article__image-container">
+                <img className="main-article__image" src={image || 'https://placehold.co/600x400?text=Not\\nFound'} alt="image" />
+            </div>
+            <div className="main-article__content">
+                <span className="article-category main-article__category">{category}</span>
+                <h2 className="main-article__title">{title}</h2>
+                <p className="main-article__text">
+                    {description}
+                </p>
+                <span className="article-source main-article__source">{source}</span>
+            </div>
+        </article>
+    )
+};
+
+const SmallArticle = ({ title, date, source }) => {
+    return (
+        <article className="small-article">
+            <h2 className="small-article__title">{title}</h2>
+            <p className="small-article__caption">
+                <span className="article-date small-article__date">{new Date(date).toLocaleDateString('ru-RU', { month: 'long', day: '2-digit' })}</span>
+                <span className="article-source small-article__source">{source}</span>
+            </p>
+        </article>
+    )
+};
+
+const Navigation = ({ onNavClick, currentCategory, className = '' }) => {
+    return (
+        <nav className={`navigation grid ${className}`}>
+            <a data-href='index' href='#' className='navigation__logo'>
+                <img className='navigation__image' src='/images/logo.svg' alt='logo' />
+            </a>
+            <ul className='navigation__list'>
+                {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
+                    return <li key={item} className='navigation__item'>
+                        <a onClick={onNavClick}
+                            data-href={item}
+                            href='#'
+                            className={`${(item === currentCategory ? 'navigation__link-active ' : '')}navigation__link`}
+                        >
+                            {category_names[item]}
+                        </a>
+                    </li>
+                })}
+            </ul>
+        </nav>
+    )
+}
+
 const App = () => {
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({ items: [], categories: [], sources: [] });
@@ -35,24 +88,11 @@ const App = () => {
         <>
             <header className='header'>
                 <div className='container'>
-                    <nav className='navigation grid header__navigation'>
-                        <a href='./index.html' className='navigation__logo'>
-                            <img className='navigation__image' src='/images/logo.svg' alt='logo' />
-                        </a>
-                        <ul className='navigation__list'>
-                            {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
-                                return <li key={item} className='navigation__item'>
-                                    <a onClick={onNavClick}
-                                        data-href={item}
-                                        href='#'
-                                        className={`${(item === category ? 'navigation__link-active ' : '')}navigation__link`}
-                                    >
-                                        {category_names[item]}
-                                    </a>
-                                </li>
-                            })}
-                        </ul>
-                    </nav>
+                    <Navigation
+                        className='header__navigation'
+                        onNavClick={onNavClick}
+                        currentCategory={category}
+                    />
                 </div>
             </header>
             <main className='main'>
@@ -61,32 +101,26 @@ const App = () => {
                         <section className='articles__big-column'>
                             {articles.items.slice(0, 3).map((item) => {
                                 return (
-                                    <article className="main-article" key={item.id} >
-                                        <div className="main-article__image-container">
-                                            <img className="main-article__image" src={item.image || 'https://placehold.co/600x400?text=Not\\nFound'} alt="image" />
-                                        </div>
-                                        <div className="main-article__content">
-                                            <span className="article-category main-article__category">{articles.categories.find(e => e.id === item.category_id).name}</span>
-                                            <h2 className="main-article__title">{item.title}</h2>
-                                            <p className="main-article__text">
-                                                {item.description}
-                                            </p>
-                                            <span className="article-source main-article__source">{articles.sources.find(e => e.id === item.source_id).name}</span>
-                                        </div>
-                                    </article>
+                                    <MainArticle
+                                        key={item.id}
+                                        title={item.title}
+                                        description={item.description}
+                                        image={item.image}
+                                        category={articles.categories.find((e) => e.id === item.category_id).name}
+                                        source={articles.sources.find((e) => e.id === item.source_id).name}
+                                    />
                                 )
                             })}
                         </section>
                         <section className='articles__small-column'>
                             {articles.items.slice(3, 12).map((item) => {
                                 return (
-                                    <article className="small-article" key={item.id}>
-                                        <h2 className="small-article__title">{item.title}</h2>
-                                        <p className="small-article__caption">
-                                            <span className="article-date small-article__date">{new Date(item.date).toLocaleDateString('ru-RU', { month: 'long', day: '2-digit' })}</span>
-                                            <span className="article-source small-article__source">{articles.sources.find((e) => e.id === item.source_id).name}</span>
-                                        </p>
-                                    </article>
+                                    <SmallArticle
+                                        key={item.id}
+                                        title={item.title}
+                                        date={item.date}
+                                        source={articles.sources.find((e) => e.id === item.source_id).name}
+                                    />
                                 )
                             })}
                         </section>
@@ -95,24 +129,11 @@ const App = () => {
             </main>
             <footer className='footer'>
                 <div className='container'>
-                    <nav className='navigation grid footer__navigation'>
-                        <a href='./index.html' className='navigation__logo'>
-                            <img className='navigation__image' src='/images/logo.svg' alt='logo' />
-                        </a>
-                        <ul className='navigation__list'>
-                            {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
-                                return <li key={item} className='navigation__item'>
-                                    <a onClick={onNavClick}
-                                        data-href={item}
-                                        href='#'
-                                        className={`${(item === category ? 'navigation__link-active ' : '')}navigation__link`}
-                                    >
-                                        {category_names[item]}
-                                    </a>
-                                </li>
-                            })}
-                        </ul>
-                    </nav>
+                    <Navigation
+                        className='footer__navigation'
+                        onNavClick={onNavClick}
+                        currentCategory={category}
+                    />
                     <div className='footer__column container'>
                         <p className='footer__text'>
                             Сделано
