@@ -2,6 +2,7 @@
     border-left: 9px solid var(--color-primary);
     padding-left: 11px;
     margin-bottom: 35px;
+    cursor: pointer;
 }
 .small-article:last-child {
     margin-bottom: 0;

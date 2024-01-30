@@ -3,6 +3,7 @@
     grid-template-columns: repeat(9, var(--grid-column-width));
     gap: var(--grid-gap);
     margin-bottom: 50px;
+    cursor: pointer;
 }
 
 .main-article:last-child {

@@ -1,0 +1,9 @@
+{
+    "include": ["src"],
+    "exclude": ["node_nodules", "dist"],
+    "compilerOptions": {
+        "strict": true,
+        "esModuleInterop": true,
+        "jsx": "react"
+    }
+}
