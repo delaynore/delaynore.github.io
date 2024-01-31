@@ -30,36 +30,32 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
   if (articleItem === null || relatedArticles === null) return null;
 
   return (
-    <section className='article-page'>
-      <article className='article'>
+    <section className="article-page">
+      <article className="article">
         {articleItem.image.length ? (
-          <section className='article__hero' style={{ backgroundImage: `url("${articleItem.image}")` }}>
-            <div className='container article__hero-content'>
-              <div className='grid'>
-                <h1 className='article__hero-title'>{articleItem.title}</h1>
+          <section className="article__hero" style={{ backgroundImage: `url("${articleItem.image}")` }}>
+            <div className="container article__hero-content">
+              <div className="grid">
+                <h1 className="article__hero-title">{articleItem.title}</h1>
               </div>
 
-              <div className='grid'>
-                <span className='article-category article__category'>{articleItem.category.name}</span>
-                <span className='article-date article__date'>{getFormatDate(articleItem.date)}</span>
+              <div className="grid">
+                <span className="article-category article__category">{articleItem.category.name}</span>
+                <span className="article-date article__date">{getFormatDate(articleItem.date)}</span>
               </div>
             </div>
           </section>
         ) : null}
 
-        <div className='grid container article__main'>
-          <div className='article__content'>
+        <div className="grid container article__main">
+          <div className="article__content">
             {!articleItem.image.length && (
-              <div className='article__title-container'>
-                <h1 className='article__title'>{articleItem.title}</h1>
+              <div className="article__title-container">
+                <h1 className="article__title">{articleItem.title}</h1>
 
-                <div className='grid'>
-                  <span className='article-category article__category'>
-                    {articleItem.category.name}
-                  </span>
-                  <span className='article-date article__date'>
-                    {getFormatDate(articleItem.date)}
-                  </span>
+                <div className="grid">
+                  <span className="article-category article__category">{articleItem.category.name}</span>
+                  <span className="article-date article__date">{getFormatDate(articleItem.date)}</span>
                 </div>
               </div>
             )}
@@ -67,7 +63,7 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
             <p>{articleItem.text}</p>
           </div>
 
-          <div className='article__small-column'>
+          <div className="article__small-column">
             {relatedArticles.slice(3, 9).map((item) => {
               const category = categories.find((e) => e.id === item.category_id);
               const source = sources.find((e) => e.id === item.source_id);
@@ -86,11 +82,11 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
         </div>
       </article>
 
-      <section className='article-page__related-articles'>
-        <div className='container'>
-          <h2 className='article-page__related-articles-title'>Читайте также:</h2>
+      <section className="article-page__related-articles">
+        <div className="container">
+          <h2 className="article-page__related-articles-title">Читайте также:</h2>
 
-          <div className='grid article-page__related-articles-list'>
+          <div className="grid article-page__related-articles-list">
             {relatedArticles.slice(0, 3).map((item) => {
               const category = categories.find((e) => e.id === item.category_id);
               const source = sources.find((e) => e.id === item.source_id);

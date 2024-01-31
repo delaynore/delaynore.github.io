@@ -1,0 +1,11 @@
+{
+  "extends": ["stylelint-config-standard", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.css"],
+      "rules": {
+        "selector-class-pattern": null
+      }
+    }
+  ]
+}

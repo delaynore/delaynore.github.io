@@ -11,9 +11,9 @@ interface Props {
 
 export const Articles: FC<Props> = ({ articles, onArticleClick }) => {
   return (
-    <section className='articles'>
-      <div className='container grid'>
-        <section className='articles__big-column'>
+    <section className="articles">
+      <div className="container grid">
+        <section className="articles__big-column">
           {articles.items.slice(0, 3).map((item) => {
             const category = articles.categories.find((e) => e.id === item.category_id);
             const source = articles.sources.find((e) => e.id === item.source_id);
@@ -30,7 +30,7 @@ export const Articles: FC<Props> = ({ articles, onArticleClick }) => {
             );
           })}
         </section>
-        <section className='articles__small-column'>
+        <section className="articles__small-column">
           {articles.items.slice(3, 12).map((item) => {
             const source = articles.sources.find((e) => e.id === item.source_id);
             return (

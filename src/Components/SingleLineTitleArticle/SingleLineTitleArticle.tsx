@@ -12,12 +12,12 @@ interface Props {
 
 export const SingleLineTitleArticle: FC<Props> = ({ image, category, text, title, source, onClick }) => {
   return (
-    <article className='single-line-title-article' onClick={onClick}>
-      <img className='single-line-title-article__image' src={image} />
-      <span className='article-category single-line-title-article__category'>{category}</span>
-      <h2 className='single-line-title-article__title'>{title}</h2>
-      <p className='single-line-title-article__text'>{text}</p>
-      <span className='article-source single-line-title-article__source'>{source}</span>
+    <article className="single-line-title-article" onClick={onClick}>
+      <img className="single-line-title-article__image" src={image} />
+      <span className="article-category single-line-title-article__category">{category}</span>
+      <h2 className="single-line-title-article__title">{title}</h2>
+      <p className="single-line-title-article__text">{text}</p>
+      <span className="article-source single-line-title-article__source">{source}</span>
     </article>
   );
 };

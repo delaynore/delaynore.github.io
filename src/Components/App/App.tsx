@@ -32,16 +32,16 @@ export const App = () => {
   return (
     <>
       <header className={`header ${articleId !== null ? 'header--article-page' : ''}`}>
-        <div className='container'>
+        <div className="container">
           <Navigation
-            placement='header'
-            className='header__navigation'
+            placement="header"
+            className="header__navigation"
             onNavClick={onNavClick}
             currentCategory={category}
           />
         </div>
       </header>
-      <main className='main'>
+      <main className="main">
         {articleId !== null ? (
           <ArticleItem
             id={articleId}
@@ -53,22 +53,22 @@ export const App = () => {
           <Articles articles={articles} onArticleClick={onArticleClick} />
         )}
       </main>
-      <footer className='footer'>
-        <div className='container'>
+      <footer className="footer">
+        <div className="container">
           <Navigation
-            placement='footer'
-            className='footer__navigation'
+            placement="footer"
+            className="footer__navigation"
             onNavClick={onNavClick}
             currentCategory={category}
           />
-          <div className='footer__column container'>
-            <p className='footer__text'>
-                            Сделано{' '}
-              <a href='https://t.me/danidoub' target='_blank' rel="noreferrer" className='footer__link'>
-                                Daniil Lozhkin
+          <div className="footer__column container">
+            <p className="footer__text">
+              Сделано{' '}
+              <a href="https://t.me/danidoub" target="_blank" rel="noreferrer" className="footer__link">
+                Daniil Lozhkin
               </a>
             </p>
-            <p className='footer__copyright'>© 2023</p>
+            <p className="footer__copyright">© 2023</p>
           </div>
         </div>
       </footer>
