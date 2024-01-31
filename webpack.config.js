@@ -11,9 +11,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',
+    publicPath: '/',
   },
   devServer: {
     open: true,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
