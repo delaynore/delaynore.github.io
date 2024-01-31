@@ -2,32 +2,36 @@ import React, { FC } from 'react';
 import { categoryNames } from '../../utils';
 import './Navigation.css';
 import logo from '../../images/logo.svg';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface Props {
-  currentCategory: string;
   className?: string;
   placement: 'header' | 'footer';
-  onNavClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-export const Navigation: FC<Props> = ({ onNavClick, currentCategory, className = '', placement = 'header' }) => {
+export const Navigation: FC<Props> = ({ className = '', placement = 'header' }) => {
+  const location = useLocation();
   return (
     <nav className={`navigation grid navigation--${placement} ${className}`}>
-      <a data-href="index" href="#" className="navigation__logo">
+      <NavLink to="/" className="navigation__logo">
         <img className="navigation__image" src={logo} alt="logo" />
-      </a>
+      </NavLink>
       <ul className="navigation__list">
         {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
           return (
             <li key={item} className="navigation__item">
-              <a
-                onClick={onNavClick}
-                data-href={item}
-                href="#"
-                className={`${item === currentCategory ? 'navigation__link-active ' : ''}navigation__link`}
+              <NavLink
+                to={`/${item}`}
+                activeClassName="navigation__link-active"
+                className="navigation__link"
+                isActive={(match) => {
+                  if (match) return true;
+                  if (item === 'index' && location.pathname === '/') return true;
+                  return false;
+                }}
               >
                 {categoryNames[item]}
-              </a>
+              </NavLink>
             </li>
           );
         })}

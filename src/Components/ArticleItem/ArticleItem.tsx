@@ -4,15 +4,12 @@ import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle'
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
 import { Article, ArticleItemApi, Category, RelatedArticlesApi, Source } from '../../types';
 import { getFormatDate } from '../../utils';
+import { useParams } from 'react-router-dom';
 
-interface Props {
-  id: number;
-  sources: Source[];
-  categories: Category[];
-  onRelatedArticleClick: (id: number) => void;
-}
-
-export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArticleClick }) => {
+export const ArticleItem: FC = () => {
+  const { id }: { id: string } = useParams();
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [sources, setSources] = React.useState<Source[]>([]);
   const [articleItem, setArticleItem] = React.useState<ArticleItemApi | null>(null);
   const [relatedArticles, setRelatedArticles] = React.useState<Article[] | null>(null);
   React.useEffect(() => {
@@ -20,11 +17,18 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
       .then((response) => response.json())
       .then(setArticleItem);
 
-    fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`)
-      .then((response) => response.json())
-      .then((response: RelatedArticlesApi) => {
-        setRelatedArticles(response.items);
-      });
+    Promise.all([
+      fetch('https://frontend.karpovcourses.net/api/v2/sources').then((response) => response.json()),
+      fetch('https://frontend.karpovcourses.net/api/v2/categories').then((response) => response.json()),
+      fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`).then((response) => response.json()),
+    ]).then((responses) => {
+      const sources: Source[] = responses[0];
+      const categories: Category[] = responses[1];
+      const relatedArticlesApi: RelatedArticlesApi = responses[2];
+      setCategories(categories);
+      setSources(sources);
+      setRelatedArticles(relatedArticlesApi.items);
+    });
   }, [id]);
 
   if (articleItem === null || relatedArticles === null) return null;
@@ -69,12 +73,12 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
               const source = sources.find((e) => e.id === item.source_id);
               return (
                 <RelatedSmallArticle
+                  id={item.id}
                   key={item.id}
                   title={item.title}
                   image={item.image}
                   category={category?.name || ''}
                   source={source?.name || ''}
-                  onClick={() => onRelatedArticleClick(item.id)}
                 />
               );
             })}
@@ -92,13 +96,13 @@ export const ArticleItem: FC<Props> = ({ id, sources, categories, onRelatedArtic
               const source = sources.find((e) => e.id === item.source_id);
               return (
                 <SingleLineTitleArticle
+                  id={item.id}
                   key={item.id}
                   title={item.title}
                   source={source?.name || ''}
                   category={category?.name || ''}
                   image={item.image}
                   text={item.description}
-                  onClick={() => onRelatedArticleClick(item.id)}
                 />
               );
             })}

@@ -1,8 +1,13 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import './common.css';
 import { App } from './Components/App/App';
+import ReactDOM from 'react-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
-const container = document.getElementById('root')!;
-const root = createRoot(container);
-root.render(<App />);
+// eslint-disable-next-line react/no-deprecated
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById('root'),
+);
